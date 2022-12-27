@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Counter } from './components/Counter';
+import { CounterClass } from './components/CounterClass';
+import { Input } from './components/Input';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  //count состояние, setCount запуск компонент дид апдейт, 0 стартовое состояние
+
+
+  /* Это управляемые компоненты. их состояние мы можем изменить */
+
+  return ( <div className='App'>
+    <CounterClass/>
+    <Counter/>
+    <Counter/>
+    <Counter/>
+    <Counter/>
+    <Input/>
+  </div>);
 }
 
 export default App;
