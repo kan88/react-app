@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MyBtn } from './ui/MyBtn/MyBtn';
 
 const Counter = function () {
     const [count, setCount] = useState(0)
@@ -10,8 +11,8 @@ const Counter = function () {
     }
     return (<div>
         <h1>{count}</h1>
-        <button onClick={increment}>Increment</button>
-        <button onClick={decrement}>Decrement</button>
+        <MyBtn onClick={increment}>Increment</MyBtn>
+        <MyBtn onClick={decrement}>Decrement</MyBtn>
     </div>);
 }
 
