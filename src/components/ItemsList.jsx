@@ -2,11 +2,11 @@ import React from "react";
 import { Item } from "./Item";
 
 
-const ItemsList = function ({ posts, title }) {
+const ItemsList = function ({ posts, title, removePost }) {
     return (
         <div className="items">
             <h2 style={{ fontSize: '36px', textAlign: 'center' }} >{title}</h2>
-            {posts.map((post) => <Item post={post} key={post.id} />)}
+            {posts.map((post) => <Item removePost={removePost} post={post} key={post.id} />)}
         </div>
     )
 }
