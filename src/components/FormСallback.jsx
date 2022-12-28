@@ -9,14 +9,14 @@ const FormCallBack = function ({ createPost }) {
         evt.preventDefault()
         const newPost = { ...post, id: Date.now() }
         createPost(newPost)
-        setPost({ title: '', description: '' })
+        setPost({ title: '', body: '' })
     }
 
     return (
         <form className="form" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <legend>CB Форма с управляемыми инпутами</legend>
             <MyInput onChange={(evt) => setPost({ ...post, title: evt.target.value })} name="title" placeholder="Название поста" value={post.title} />
-            <MyInput onChange={(evt) => setPost({ ...post, description: evt.target.value })} name="description" placeholder="Описание поста" value={post.description} />
+            <MyInput onChange={(evt) => setPost({ ...post, body: evt.target.value })} name="body" placeholder="Описание поста" value={post.body} />
             <MyBtn type="submit" onClick={addNewPost}>Submit</MyBtn>
         </form>
     )
