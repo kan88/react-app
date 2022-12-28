@@ -13,11 +13,11 @@ const FormCallBack = function ({ createPost }) {
     }
 
     return (
-        <form className="form">
-            <legend>Форма с управляемыми инпутами с использованием колбэк для прокидывания наверх состояния</legend>
+        <form className="form" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <legend>CB Форма с управляемыми инпутами</legend>
             <MyInput onChange={(evt) => setPost({ ...post, title: evt.target.value })} name="title" placeholder="Название поста" value={post.title} />
             <MyInput onChange={(evt) => setPost({ ...post, description: evt.target.value })} name="description" placeholder="Описание поста" value={post.description} />
-            <MyBtn onClick={addNewPost}>Submit</MyBtn>
+            <MyBtn type="submit" onClick={addNewPost}>Submit</MyBtn>
         </form>
     )
 }

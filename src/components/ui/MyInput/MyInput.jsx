@@ -3,7 +3,7 @@ import classes from "./MyInput.module.css"
 
 const MyInput = function (props) {
     return (
-        <input className={classes.myInput} {...props} />
+        <input className={classes.myInput} {...props} required />
     )
 }
 

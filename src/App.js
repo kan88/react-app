@@ -1,12 +1,11 @@
 import React, {useMemo, useState} from 'react';
 import { Counter } from './components/Counter';
-import { CounterClass } from './components/CounterClass';
 import { Filter } from './components/Filter';
-// import { Form } from './components/Form';
-// import { FormRef } from './components/FormRef';
 import { FormCallBack } from './components/FormСallback';
 import { Input } from './components/Input';
 import { ItemsList } from './components/ItemsList';
+import { MyBtn } from './components/ui/MyBtn/MyBtn';
+import { MyModal } from './components/ui/MyModal/MyModal';
 import './styles/app.css';
 
 
@@ -19,7 +18,7 @@ function App() {
     {id:2, title: 'php', description: 'Backend language'},
     {id:3, title: 'sql', description: 'Backend language'}
   ]) 
-
+  const [modal, setModal] = useState(false)
   const [filter, setFilter] = useState({sort: '', query: ''})
 
   const sortedPosts = useMemo(() => {
@@ -35,6 +34,7 @@ function App() {
 
   const createPost = (newProp) => {
     setPosts(() => [...posts, newProp])
+    setModal(false)
   }
 
   const removePost = (post) => {
@@ -42,14 +42,16 @@ function App() {
   }
 
   return ( <div className='app'>
-    {/* <Form posts={posts} state={setPosts}/> */}
-    <FormCallBack createPost={createPost}/>
+    <MyBtn onClick={() => setModal(true)}>
+      Добавить пост
+    </MyBtn>
     <Filter filter={filter} setFilter={setFilter}/>
+    <MyModal visible={modal} setVisible={setModal}>
+      <FormCallBack createPost={createPost} />
+    </MyModal>
     <hr style={{ margin: '15px 0' }}></hr>
-    {/* <FormRef/> */}
     <ItemsList removePost={removePost} posts={sortedSearchingPosts} title="Cписок номер 1"/>
     <hr style={{ margin: '15px 0' }}></hr>
-    <CounterClass/>
     <Counter/>
     <Input/>
   </div>);
