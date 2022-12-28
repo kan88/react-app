@@ -14,7 +14,7 @@ const Filter = function ({ filter, setFilter }) {
                 defaultValue='нет сортировки'
                 props={[
                     { value: 'title', name: 'По названию' },
-                    { value: 'description', name: 'По описанию' },
+                    { value: 'body', name: 'По описанию' },
                 ]} />
         </div>
     )

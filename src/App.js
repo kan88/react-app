@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Counter } from './components/Counter';
 import { Filter } from './components/Filter';
 import { FormCallBack } from './components/FormСallback';
@@ -6,31 +6,31 @@ import { Input } from './components/Input';
 import { ItemsList } from './components/ItemsList';
 import { MyBtn } from './components/ui/MyBtn/MyBtn';
 import { MyModal } from './components/ui/MyModal/MyModal';
+import { usePosts } from './hooks/usePosts';
 import './styles/app.css';
+import { PostService } from './API/PostService';
+import { MyLoader } from './components/ui/MyLoader/MyLoader';
 
 
 function App() {
 
   //инициализируем состояние списка и прокинем 
   // в форму для работы с добавлением новых итемов и прокинем в список для отображения
-  const [posts, setPosts] = useState([
-    {id:1, title: 'JS', description: 'Frontend language'},
-    {id:2, title: 'php', description: 'Backend language'},
-    {id:3, title: 'sql', description: 'Backend language'}
-  ]) 
+  const [posts, setPosts] = useState([]) 
   const [modal, setModal] = useState(false)
   const [filter, setFilter] = useState({sort: '', query: ''})
+  const [loading, setLoading] = useState(false)
+  const sortedSearchingPosts = usePosts(posts, filter.sort, filter.query )
+  async function fetchPosts () {
+    setLoading(true)
+    const posts = await PostService.getAll()
+    setPosts(posts)
+    setLoading(false)
+  }
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
-  const sortedPosts = useMemo(() => {
-    if(filter.sort) {
-      return [...posts].sort((a,b) => a[filter.sort].localeCompare(b[filter.sort]))
-    }
-    return posts
-  }, [filter.sort, posts]);
-
-  const sortedSearchingPosts = useMemo(() => {
-    return sortedPosts.filter((post) => post.title.toLowerCase().includes(filter.query.toLowerCase()))
-  }, [filter.query, sortedPosts])
 
   const createPost = (newProp) => {
     setPosts(() => [...posts, newProp])
@@ -42,6 +42,7 @@ function App() {
   }
 
   return ( <div className='app'>
+    <MyBtn onClick={fetchPosts}>Посмотреть данные</MyBtn>
     <MyBtn onClick={() => setModal(true)}>
       Добавить пост
     </MyBtn>
@@ -49,8 +50,11 @@ function App() {
     <MyModal visible={modal} setVisible={setModal}>
       <FormCallBack createPost={createPost} />
     </MyModal>
-    <hr style={{ margin: '15px 0' }}></hr>
-    <ItemsList removePost={removePost} posts={sortedSearchingPosts} title="Cписок номер 1"/>
+    {loading
+    ? <MyLoader/>
+    : <ItemsList removePost={removePost} posts={sortedSearchingPosts} title="Cписок постов"/>
+  }
+    
     <hr style={{ margin: '15px 0' }}></hr>
     <Counter/>
     <Input/>
